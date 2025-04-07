@@ -1,0 +1,16 @@
+.container {
+  min-height: calc(100vh - 64px - 69px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(to right, rgb(33, 147, 176), rgb(109, 213, 237));
+  .info {
+    text-align: center;
+    button {
+      height: 60px;
+      font-size: 24px;
+    }
+  }
+}
