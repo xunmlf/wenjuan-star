@@ -3,10 +3,10 @@ import { FC } from 'react'
 import styles from './index.module.scss'
 
 import EditCavas from './EditCavas'
-// import useQuestionData from '../../../hooks/useQuestionData'
-const Edit: FC = () => {
-  // const { loading, data } = useQuestionData()
 
+import useLoadQuestionData from '../../../hooks/useLoadQuestionData'
+const Edit: FC = () => {
+  const { loading } = useLoadQuestionData()
   return (
     <div className={styles.container}>
       <div>header</div>
@@ -15,7 +15,7 @@ const Edit: FC = () => {
           <div className={styles.left}>lift</div>
           <div className={styles.main}>
             <div className={styles['canvas-wrapper']}>
-              <EditCavas></EditCavas>
+              <EditCavas loading={loading}></EditCavas>
             </div>
           </div>
           <div className={styles.right}>right</div>

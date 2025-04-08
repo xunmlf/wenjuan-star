@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { getQuestionService } from '../services/question'
 
 import { useRequest } from 'ahooks'
-export default function useQuestionData() {
+export default function useLoadQuestionData() {
   const { questionId = '' } = useParams()
 
   //   const [questionData, setQuestionData] = useState({})
