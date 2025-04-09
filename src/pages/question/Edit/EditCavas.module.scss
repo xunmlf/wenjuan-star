@@ -15,6 +15,10 @@
   }
 }
 
+.selected {
+  border-color: #1890ff !important;
+}
+
 .components {
   // 组件不可选 屏蔽鼠标行为
   pointer-events: none;

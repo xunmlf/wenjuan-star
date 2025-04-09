@@ -15,9 +15,9 @@ export default function useLoadQuestionData() {
 
   // ajax 加载数据
   const { data, loading, error, run } = useRequest(
-    async (id: string) => {
-      if (!id) throw new Error('id is required')
-      const res = await getQuestionService(id)
+    async (questionId: string) => {
+      if (!questionId) throw new Error('id is required')
+      const res = await getQuestionService(questionId)
       //   console.log('result', res)
       return res
     },
@@ -31,8 +31,13 @@ export default function useLoadQuestionData() {
     if (!data) return
     const { title = '', componentList = [] } = data
 
+    let seleceId = ''
+    if (componentList.length > 0) {
+      seleceId = componentList[0].fe_id // 默认选中第一个组件
+    }
+
     // 把 componentList 传给 redux store
-    dispatch(resetComponents({ componentList }))
+    dispatch(resetComponents({ componentList, seleceId }))
   }, [data])
 
   // 判断id 变化 ，执行ajax 加载问卷数据

@@ -14,6 +14,8 @@ export const store = configureStore({
     // 分模块
     // counter: counterReducer,
     user: userReducer,
+
+    // 组件类
     components: componentsReducer
   }
 })
