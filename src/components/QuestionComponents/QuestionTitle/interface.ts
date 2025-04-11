@@ -3,6 +3,7 @@ export type QuestionTitlePropsType = {
   text?: string
   level?: 1 | 2 | 3 | 4 | 5
   isCenter?: boolean
+  onChange?: (props: QuestionTitlePropsType) => void
 }
 
 // 默认的属性

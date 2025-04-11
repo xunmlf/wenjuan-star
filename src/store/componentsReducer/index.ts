@@ -1,12 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, current } from '@reduxjs/toolkit'
 
 import { ComponentPropsType } from '../../components/QuestionComponents/index'
+import { getNextSelectedComponentId } from './utils'
 
 // 定义组件信息的类型
 export interface ComponentInfoType {
   fe_id: string
   type: string
   title: string
+  isHidden?: boolean
+  isLocked?: boolean
   props: ComponentPropsType
 }
 
@@ -51,9 +54,59 @@ export const componentsSlice = createSlice({
       }
       // 更新选中的组件id
       state.seleceId = newComponent.fe_id
+    },
+    // 修改组件属性
+    changeComponentProps: (state: ComponentsStateType, actions) => {
+      const { fe_id, newProps } = actions.payload
+
+      const curComponent = state.componentList.find(c => c.fe_id === fe_id)
+      if (curComponent) {
+        curComponent.props = {
+          ...curComponent.props,
+          ...newProps
+        }
+      }
+    },
+    // 删除画布中选中的组件
+    deleteSelectedComponent: state => {
+      const { componentList, seleceId } = state
+      // 找到删除后的选中组件id
+      const newSelectedId = getNextSelectedComponentId(seleceId, componentList)
+      const index = componentList.findIndex(c => c.fe_id === seleceId)
+      if (index < 0) {
+        return
+      }
+      componentList.splice(index, 1)
+      state.seleceId = newSelectedId
+    },
+    // 隐藏/显示画布中选中的组件
+    hideSelectedComponent: state => {
+      const { componentList, seleceId } = state
+
+      if (!seleceId) return
+      const curComponent = componentList.find(c => c.fe_id === seleceId)
+      if (!curComponent) return
+      // 如果当前选中的组件存在，则切换其隐藏状态
+      if (curComponent) {
+        curComponent.isHidden = !curComponent.isHidden
+      }
+      // 从新计算 seleteId
+      let newSelectedId = ''
+      if (curComponent?.isHidden) {
+        newSelectedId = getNextSelectedComponentId(seleceId, componentList)
+      } else {
+        newSelectedId = curComponent.fe_id
+      }
     }
   }
 })
 
-export const { resetComponents, changeSelectedId, addConpnenet } = componentsSlice.actions
+export const {
+  resetComponents,
+  changeSelectedId,
+  addConpnenet,
+  changeComponentProps,
+  deleteSelectedComponent,
+  hideSelectedComponent
+} = componentsSlice.actions
 export default componentsSlice.reducer

@@ -7,9 +7,14 @@ const useGetComponentInfo = () => {
 
   const { componentList = [], seleceId } = components
 
+  // 点击选中的组件
+  const selectComponent = componentList.find(c => c.fe_id === seleceId)
+
   return {
     componentList,
-    seleceId
+    seleceId,
+    // 选中的组件
+    selectComponent
   }
 }
 

@@ -47,22 +47,24 @@ const EditCanvas: FC<propsType> = ({ loading }) => {
 
   return (
     <div className={styles.canvas}>
-      {componentList.map(c => {
-        const { fe_id } = c
+      {componentList
+        .filter(c => !c.isHidden)
+        .map(c => {
+          const { fe_id } = c
 
-        // 拼接class类名
-        const wrapperDefaultClassName = styles['component-wrapper']
-        const selectedClassName = styles.selected
-        const wrapperClassName = classNames({
-          [wrapperDefaultClassName]: true,
-          [selectedClassName]: fe_id === seleceId
-        })
-        return (
-          <div key={fe_id} className={wrapperClassName} onClick={e => hundleClick(e, fe_id)}>
-            <div className={styles.components}>{getComponent(c)}</div>
-          </div>
-        )
-      })}
+          // 拼接class类名
+          const wrapperDefaultClassName = styles['component-wrapper']
+          const selectedClassName = styles.selected
+          const wrapperClassName = classNames({
+            [wrapperDefaultClassName]: true,
+            [selectedClassName]: fe_id === seleceId
+          })
+          return (
+            <div key={fe_id} className={wrapperClassName} onClick={e => hundleClick(e, fe_id)}>
+              <div className={styles.components}>{getComponent(c)}</div>
+            </div>
+          )
+        })}
       {/* <div className={styles['component-wrapper']}>
         <div className={styles.components}>
           <QuestionTitle />

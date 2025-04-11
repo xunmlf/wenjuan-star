@@ -9,6 +9,8 @@ import { changeSelectedId } from '../../../store/componentsReducer'
 
 import useLoadQuestionData from '../../../hooks/useLoadQuestionData'
 import LeftPanel from './LeftPanel'
+import RightPanel from './RightPanel'
+import EditHeader from './EditHeader'
 const Edit: FC = () => {
   const { loading } = useLoadQuestionData()
   const dispatch = useDispatch()
@@ -17,7 +19,7 @@ const Edit: FC = () => {
   }
   return (
     <div className={styles.container}>
-      <div>header</div>
+      <EditHeader></EditHeader>
       <div className={styles['content-wrapper']}>
         <div className={styles.content}>
           <div className={styles.left}>
@@ -28,7 +30,9 @@ const Edit: FC = () => {
               <EditCavas loading={loading}></EditCavas>
             </div>
           </div>
-          <div className={styles.right}>right</div>
+          <div className={styles.right}>
+            <RightPanel></RightPanel>
+          </div>
         </div>
       </div>
     </div>

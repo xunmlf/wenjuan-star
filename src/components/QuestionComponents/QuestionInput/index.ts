@@ -3,6 +3,7 @@
  */
 
 import Component from './Component'
+import PropComponent from './PropComponent'
 
 import { QuestionInputDefaultPropsType } from './interface'
 
@@ -13,5 +14,6 @@ export default {
   title: '输入框',
   type: 'questionInput',
   Component,
+  PropComponent, // 属性配置的组件
   defaultProps: QuestionInputDefaultPropsType
 }
