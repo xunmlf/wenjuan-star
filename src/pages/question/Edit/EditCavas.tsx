@@ -11,6 +11,9 @@ import { useDispatch } from 'react-redux'
 import classNames from 'classnames'
 import useBindCanvasKeyPress from '../../../hooks/useBindCanvasKeyPress'
 
+import { useRightClickMenu } from '../../../hooks/useRightClickMenu'
+import RightClickMenu from '../../../components/RightClickMenu'
+
 type propsType = {
   loading: boolean
 }
@@ -28,6 +31,8 @@ function getComponent(componentInfo: ComponentInfoType) {
 
 const EditCanvas: FC<propsType> = ({ loading }) => {
   const { componentList, seleceId } = useGetComponentInfo()
+
+  const { MENU_ID, handleContextMenu } = useRightClickMenu()
 
   const dispatch = useDispatch()
 
@@ -51,25 +56,35 @@ const EditCanvas: FC<propsType> = ({ loading }) => {
 
   return (
     <div className={styles.canvas}>
-      {componentList
-        .filter(c => !c.isHidden)
-        .map(c => {
-          const { fe_id, isLocked } = c
+      <div>
+        {componentList
+          .filter(c => !c.isHidden)
+          .map(c => {
+            const { fe_id, isLocked } = c
 
-          // 拼接class类名
-          const wrapperDefaultClassName = styles['component-wrapper']
-          const selectedClassName = styles.selected
-          const wrapperClassName = classNames({
-            [wrapperDefaultClassName]: true,
-            [selectedClassName]: fe_id === seleceId,
-            [styles.locked]: isLocked
-          })
-          return (
-            <div key={fe_id} className={wrapperClassName} onClick={e => hundleClick(e, fe_id)}>
-              <div className={styles.components}>{getComponent(c)}</div>
-            </div>
-          )
-        })}
+            // 拼接class类名
+            const wrapperDefaultClassName = styles['component-wrapper']
+            const selectedClassName = styles.selected
+            const wrapperClassName = classNames({
+              [wrapperDefaultClassName]: true,
+              [selectedClassName]: fe_id === seleceId,
+              [styles.locked]: isLocked
+            })
+            return (
+              <div
+                key={fe_id}
+                className={wrapperClassName}
+                onClick={e => hundleClick(e, fe_id)}
+                onContextMenu={e => handleContextMenu(e, { id: c.fe_id })}
+              >
+                <div className={styles.components}>{getComponent(c)}</div>
+              </div>
+            )
+          })}
+
+        <RightClickMenu id={MENU_ID} />
+      </div>
+
       {/* <div className={styles['component-wrapper']}>
         <div className={styles.components}>
           <QuestionTitle />
