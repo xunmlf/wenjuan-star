@@ -4,6 +4,7 @@ export type QuestionTitlePropsType = {
   level?: 1 | 2 | 3 | 4 | 5
   isCenter?: boolean
   onChange?: (props: QuestionTitlePropsType) => void
+  disabled?: boolean
 }
 
 // 默认的属性

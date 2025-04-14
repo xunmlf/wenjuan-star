@@ -13,10 +13,19 @@ import {
   UndoOutlined,
   RedoOutlined
 } from '@ant-design/icons'
-import { deleteSelectedComponent, hideSelectedComponent } from '../../../store/componentsReducer'
+import {
+  deleteSelectedComponent,
+  hideSelectedComponent,
+  lockSelectedComponent,
+  pasteSelectedComponent,
+  copySelectedComponent
+} from '../../../store/componentsReducer'
 import { useDispatch } from 'react-redux'
+import useGetComponentInfo from '../../../hooks/useGetComponentInfo'
 
 const EditToolbar: FC = () => {
+  const { selectComponent, copiedComponent } = useGetComponentInfo()
+  const { isLocked } = selectComponent || {}
   const dispatch = useDispatch()
   // 删除
   const handelDelete = () => {
@@ -25,8 +34,21 @@ const EditToolbar: FC = () => {
   }
   // 隐藏
   const handleHide = () => {
-    console.log('隐藏')
+    // console.log('隐藏')
     dispatch(hideSelectedComponent())
+  }
+  // 锁定
+  const handleLock = () => {
+    // console.log('锁定')
+    dispatch(lockSelectedComponent())
+  }
+  // 复制
+  const handleCopy = () => {
+    dispatch(copySelectedComponent())
+  }
+  // 粘贴
+  const handlePaste = () => {
+    dispatch(pasteSelectedComponent())
   }
 
   return (
@@ -45,13 +67,24 @@ const EditToolbar: FC = () => {
         </Tooltip>
 
         <Tooltip title='锁定'>
-          <Button shape='circle' icon={<LockOutlined />} />
+          <Button
+            shape='circle'
+            icon={<LockOutlined />}
+            type={isLocked ? 'primary' : 'default'}
+            onClick={handleLock}
+          />
         </Tooltip>
         <Tooltip title='复制'>
-          <Button shape='circle' type='link' icon={<CopyOutlined />} />
+          <Button shape='circle' type='link' icon={<CopyOutlined />} onClick={handleCopy} />
         </Tooltip>
         <Tooltip title='粘贴'>
-          <Button shape='circle' type='link' icon={<BlockOutlined />} />
+          <Button
+            shape='circle'
+            type='link'
+            icon={<BlockOutlined />}
+            onClick={handlePaste}
+            disabled={copiedComponent == null}
+          />
         </Tooltip>
 
         <Tooltip title='上移'>

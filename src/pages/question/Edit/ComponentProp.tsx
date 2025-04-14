@@ -14,7 +14,7 @@ const ComponentProp: FC = () => {
   if (!selectComponent) return <NoProps />
 
   // 选中的组件 根绝 type 判断组件是什么类型
-  const { type, props } = selectComponent
+  const { type, props, isHidden, isLocked } = selectComponent
   const componentConf = getComponentConfByType(type)
   if (!componentConf) return <NoProps />
 
@@ -30,6 +30,12 @@ const ComponentProp: FC = () => {
   // 获取组件的配置
   const { PropComponent } = componentConf
 
-  return <PropComponent {...props} onChange={changeProps}></PropComponent>
+  return (
+    <PropComponent
+      {...props}
+      onChange={changeProps}
+      disabled={isLocked || isHidden}
+    ></PropComponent>
+  )
 }
 export default ComponentProp

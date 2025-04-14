@@ -5,7 +5,7 @@ import { ComponentsStateType } from '../store/componentsReducer'
 const useGetComponentInfo = () => {
   const components = useSelector<storeType>(state => state.components) as ComponentsStateType
 
-  const { componentList = [], seleceId } = components
+  const { componentList = [], seleceId, copiedComponent } = components
 
   // 点击选中的组件
   const selectComponent = componentList.find(c => c.fe_id === seleceId)
@@ -14,7 +14,8 @@ const useGetComponentInfo = () => {
     componentList,
     seleceId,
     // 选中的组件
-    selectComponent
+    selectComponent,
+    copiedComponent
   }
 }
 
