@@ -105,7 +105,6 @@ export const componentsSlice = createSlice({
         // 如果当前要显示，就选中当前组件
         newSelectedId = targetComponent.fe_id
       }
-
       state.seleceId = newSelectedId
     },
     // 锁定/解锁画布中选中的组件
@@ -131,6 +130,24 @@ export const componentsSlice = createSlice({
 
       // 添加到组件列表中
       insertNewComponent(state, state.copiedComponent)
+    },
+    // 选中上一个组件
+    selectPrevComponent: state => {
+      const selectIndex = state.componentList.findIndex(c => c.fe_id === state.seleceId)
+      // 为选中
+      if (selectIndex < 0) return
+      // 选中第一个
+      if (selectIndex <= 0) return
+      state.seleceId = state.componentList[selectIndex - 1].fe_id
+    },
+    // 选中下一个组件
+    selectNextComponent: state => {
+      const selectIndex = state.componentList.findIndex(c => c.fe_id === state.seleceId)
+      // 为选中
+      if (selectIndex < 0) return
+      // 选中最后一个
+      if (selectIndex === state.componentList.length - 1) return
+      state.seleceId = state.componentList[selectIndex + 1].fe_id
     }
   }
 })
@@ -144,6 +161,8 @@ export const {
   hideSelectedComponent,
   lockSelectedComponent,
   copySelectedComponent,
-  pasteSelectedComponent
+  pasteSelectedComponent,
+  selectPrevComponent,
+  selectNextComponent
 } = componentsSlice.actions
 export default componentsSlice.reducer
