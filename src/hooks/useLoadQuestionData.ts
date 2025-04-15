@@ -29,7 +29,7 @@ export default function useLoadQuestionData() {
   // 根据 获取的data  设置 redux store
   useEffect(() => {
     if (!data) return
-    const { title = '', componentList = [] } = data
+    const { componentList = [] } = data
 
     let seleceId = ''
     if (componentList.length > 0) {

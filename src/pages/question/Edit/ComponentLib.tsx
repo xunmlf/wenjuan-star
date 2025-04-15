@@ -42,7 +42,14 @@ const ComponentLib: FC = () => {
         const { components } = group
         return (
           <div key={group.groupId}>
-            <Title level={3} style={{ fontSize: '16px', marginTop: index > 0 ? '20px' : '0' }}>
+            <Title
+              level={3}
+              style={{
+                fontSize: '16px',
+                marginTop: index > 0 ? '20px' : '0',
+                backgroundColor: '#f0f2f5'
+              }}
+            >
               {group.groupName}
             </Title>
 
